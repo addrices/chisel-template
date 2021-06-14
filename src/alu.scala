@@ -1,5 +1,6 @@
 import chisel3._
 import chisel3.util._
+import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 import chisel3.iotesters.{ChiselFlatSpec, Driver, PeekPokeTester}
 
 object GTimer {
@@ -57,6 +58,9 @@ class ALU extends Module {
 
 object MainDriver extends ChiselFlatSpec {
   def main(args: Array[String]): Unit = {
-    chisel3.Driver.execute(args, () => new ALU)
+    (new ChiselStage).execute(
+      args,
+      Seq(ChiselGeneratorAnnotation(() => new ALU)))
   }
 }
+// Array("-X", "verilog","--target-dir", "output/")

@@ -17,7 +17,7 @@ run-emu: emu
 
 $(EMU_TOP_V): $(SCALA_FILES)
 	@mkdir -p $(@D)
-	@sbt "run MainDriver -tn $(EMU_TOP_MODULE) -td $(@D) --output-file $@"
+	@sbt "run MainDriver -X verilog -td $(@D) -o $(notdir $@)"
 
 $(EMU_MK): $(EMU_TOP_V) $(EMU_CXXFILES)
 	@verilator --cc --exe --top-module $(EMU_TOP_MODULE) \
